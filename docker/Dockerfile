@@ -17,7 +17,7 @@ RUN cd /etc/apt/ && \
     apt-get update && \
     apt-get install -y --no-install-recommends \
     python3 python3-pip git vim git-lfs wget ripgrep curl && \
-    pip3 install --upgrade huggingface_hub modelscope && \
+    pip3 install --upgrade huggingface_hub modelscope jupyter && \
     pip3 config set global.index-url https://pypi.doubanio.com/simple && \
     curl -fsSL https://ollama.com/install.sh | sh && \
     cd /etc/apt/sources.list.d && \
