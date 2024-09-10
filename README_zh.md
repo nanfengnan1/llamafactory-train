@@ -51,6 +51,41 @@
 
   - 安装nvidia CDI环境
 
+    默认podman不支持直接访问物理机设备, 事实上也是支持的, 只不过你需要手动指定所有库和device.
+    为了方便我们直接使用CDI标准, 让容器来通过配置文件访问物理机的device.
+ 
+    - 配置dnf库
+    
+    ```bash
+    curl -s -L https://nvidia.github.io/libnvidia-container/stable/rpm/nvidia-container-toolkit.repo | \
+    tee /etc/yum.repos.d/nvidia-container-toolkit.repo
+    ```
+
+    - 安装nvidia-container-toolkit
+
+    ```bash
+    yum-config-manager --enable nvidia-container-toolkit-experimental
+    dnf install -y nvidia-container-toolkit
+    ```
+
+    - 宿主机中生成CDI设备
+  
+    ```bash
+     nvidia-ctk cdi generate --output=/etc/cdi/nvidia.yaml
+    ```
+
+    - 检查生成的设备的名称
+  
+    ```bash
+    nvidia-ctk cdi list
+    ```
+
+    - 测试是否可以在容器内访问宿主机的nvidia驱动
+
+    ```bash
+    podman run --rm --device nvidia.com/gpu=all --security-opt=label=disable ubuntu nvidia-smi
+    ```
+
   - 根据nvidia基础镜像制作image
 
     docker镜像需要安装llamafactory环境
@@ -60,6 +95,7 @@
     docker build编译LLammfactory镜像
     事实上, 强烈建议使用nvidia的基础镜像, 在上面修改镜像
     进入docker目录, 执行
+
     ```bash
     docker build -t alexan/llamafactory .
     ```
@@ -175,14 +211,6 @@
     
     ```
 
-  - refer
-
-    [llama3 微调教程之 llama factory 的 安装部署与模型微调过程，模型量化和gguf转换。_llamafactory 部署-CSDN博客](https://blog.csdn.net/lengyoumo/article/details/138867085?spm=1001.2101.3001.6650.2&utm_medium=distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~Ctr-2-138867085-blog-140800259.235^v43^pc_blog_bottom_relevance_base6&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~Ctr-2-138867085-blog-140800259.235^v43^pc_blog_bottom_relevance_base6&utm_relevant_index=5)
-
-    [LLaMA-Factory QuickStart - 知乎 (zhihu.com)](https://zhuanlan.zhihu.com/p/695287607)
-
-    [基于 Qwen2 大模型微调技术详细教程（LoRA 参数高效微调和 SwanLab 可视化监控）_qwen2 lora-CSDN博客](https://blog.csdn.net/obullxl/article/details/140562254)
-
 - ollama部署模型
 
   安装ollama, 如果容器制作好了, 可以skip
@@ -226,4 +254,6 @@
   docker run -d -p 3000:8080 --add-host=host.docker.internal:host-gateway -v open-webui:/opt/llvm/app/backend/data --name open-webui swr.cn-north-4.myhuaweicloud.com/ddn-k8s/ghcr.io/open-webui/open-webui:v0.3.12
   ```
 
-### 
+### 3. refer
+
+[nvidia install cdi](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html#installing-with-yum-or-dnf)
