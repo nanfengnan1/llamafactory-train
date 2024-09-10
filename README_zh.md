@@ -11,14 +11,14 @@
 
   - 安装podman
   
-  使用podman不推荐docker原因, podman采用CDI支持容器访问nvidia的GPU驱动,
-  而docker还是采用老旧的running time架构访问宿主机gpu驱动.
+    使用podman不推荐docker原因, podman采用CDI支持容器访问nvidia的GPU驱动,
+    而docker还是采用老旧的running time架构访问宿主机gpu驱动.
  
-  ```bash
-  dnf install -y docker
-  systemctl start podman
-  systemctl enable podman
-  ```
+    ```bash
+    dnf install -y docker
+    systemctl start podman
+    systemctl enable podman
+    ```
 
   - 安装nvidia驱动和cuda环境
   
@@ -130,23 +130,23 @@
 
     - docker
 
-    存放Dockerfile文件
+      存放Dockerfile文件
   
     - src/deply
     
-    存放模型的modefile文件
+      存放模型的modefile文件
  
     - src/models
 
-    存放生成的模型
+      存放生成的模型
 
     - src/sources
 
-    存放llama.cpp, 用于进行模型合并的源码
+      存放llama.cpp, 用于进行模型合并的源码
 
     - src/test
 
-    容器内测试cuda的脚本(这里名字写错了)
+      容器内测试cuda的脚本(这里名字写错了)
   
 
 - 下面都是容器内操作
