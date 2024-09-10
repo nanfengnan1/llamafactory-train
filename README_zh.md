@@ -117,11 +117,37 @@
     podman run --rm --device nvidia.com/gpu=all localhost/alexan/llamafactory:latest nvidia-smi
     ```
 
-- podman运行gpu容器
+  - podman运行gpu容器
 
   ```bash
+  # 把外部源码目录映射到容器内
   podman run -ti --device nvidia.com/gpu=all --network host -v /home/root/prog/llvm/:/opt/llvm localhost/alexan/llamafactory:latest bash
   ```
+
+  - 宿主机项目目录介绍
+  
+  ![宿主机目录](images/dir.png)
+
+    - docker
+
+    存放Dockerfile文件
+  
+    - src/deply
+    
+    存放模型的modefile文件
+ 
+    - src/models
+
+    存放生成的模型
+
+    - src/sources
+
+    存放llama.cpp, 用于进行模型合并的源码
+
+    - src/test
+
+    容器内测试cuda的脚本(这里名字写错了)
+  
 
 - 下面都是容器内操作
 
@@ -257,3 +283,6 @@
 ### 3. refer
 
 [nvidia install cdi](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html#installing-with-yum-or-dnf)
+
+📝License💖
+
