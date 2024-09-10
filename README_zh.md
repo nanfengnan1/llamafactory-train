@@ -4,11 +4,13 @@
 ### 2. llamafactory训练流程
 - 宿主机操作系统
   - Anolis8.9
-  Centos8 or redhat8
+
+    Centos8 or redhat8
 
 - 物理机安装nvidia驱动和cuda环境
 
   - 安装podman
+  
   使用podman不推荐docker原因, podman采用CDI支持容器访问nvidia的GPU驱动,
   而docker还是采用老旧的running time架构访问宿主机gpu驱动.
  
@@ -19,6 +21,33 @@
   ```
 
   - 安装nvidia驱动和cuda环境
+  
+    - 下载nvidia驱动和cuda到nvidia目录下
+
+    ```bash
+    mkdir nvidia
+    wget https://cn.download.nvidia.com/XFree86/Linux-x86_64/550.107.02/NVIDIA-Linux-x86_64-550.107.02.run
+    wget https://developer.download.nvidia.com/compute/cuda/12.4.0/local_installers/cuda_12.4.0_550.54.14_linux.run
+    ```
+ 
+    - 安装nvidia驱动和cuda
+
+    ```bash
+    bash NVIDIA-Linux-x86_64-550.107.02.run
+    bash cuda_12.4.0_550.54.14_linux.run
+  
+    # 配置root环境变量访问cuda
+    echo 'export PATH=/usr/local/cuda/bin:$PATH' >> ~/.bashrc
+    echo 'export LD_LIBRARY_PATH=/usr/local/cuda/lib64:$LD_LIBRARY_PATH' >> ~/.bashrc
+    source ~/.bashrc
+    ```
+  
+   - 验证nvidia驱动和cuda
+
+   ```bash
+   nvidia-smi
+   nvcc --version
+   ```
 
   - 安装nvidia CDI环境
 
