@@ -42,12 +42,12 @@
     source ~/.bashrc
     ```
   
-   - 验证nvidia驱动和cuda
+    - 验证nvidia驱动和cuda
 
-   ```bash
-   nvidia-smi
-   nvcc --version
-   ```
+    ```bash
+    nvidia-smi
+    nvcc --version
+    ```
 
   - 安装nvidia CDI环境
 
