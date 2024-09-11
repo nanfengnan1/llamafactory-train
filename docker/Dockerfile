@@ -16,13 +16,15 @@ RUN cd /etc/apt/ && \
     apt update && apt upgrade -y && \
     apt-get update && \
     apt-get install -y --no-install-recommends \
-    python3 python3-pip git vim git-lfs wget ripgrep curl && \
-    pip3 config set global.index-url https://pypi.doubanio.com/simple && \
-    pip3 install --upgrade huggingface_hub modelscope jupyter && \
+    python3 python3-pip git vim git-lfs wget ripgrep curl language-pack-zh-hans && \
+    pip3 install --upgrade huggingface_hub modelscope jupyter TensorRT && \
     pip3 config set global.index-url https://pypi.doubanio.com/simple && \
     curl -fsSL https://ollama.com/install.sh | sh && \
     cd /etc/apt/sources.list.d && \
-    mv cuda-ubuntu2204-x86_64.list cuda-ubuntu2204-x86_64.list.bak
+    mv cuda-ubuntu2204-x86_64.list cuda-ubuntu2204-x86_64.list.bak && \
+    echo "set encoding=utf-8" >> ~/.vimrc && \
+    echo "set fileencodings=utf-8,gbk,gb2312,gb18030" >> ~/.vimrc && \
+    echo "set termencoding=utf-8" >> ~/.vimrc
 
 RUN mkdir -p /opt/env && \
     cd /opt/env && \
